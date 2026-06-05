@@ -1,0 +1,23 @@
+# BeVinci source hygiene policy.
+#
+# This file defines the desired future policy. Existing files are not normalized
+# in this commit. Any line-ending normalization must happen in a separate,
+# explicit hygiene commit.
+
+* text=auto
+
+*.cpp text
+*.h text
+*.hpp text
+*.c text
+*.cc text
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.odt binary
+*.pdf binary
+*.ico binary
