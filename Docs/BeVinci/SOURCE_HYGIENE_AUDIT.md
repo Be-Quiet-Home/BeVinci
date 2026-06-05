@@ -5,11 +5,11 @@ It does not change any source files.
 
 ## Summary
 
-- lf-only: 415
+- lf-only: 420
 - crlf-only: 61
-- mixed: 4
-- no-eol: 1
-- bom: 2
+- mixed: 0
+- no-eol: 0
+- bom: 1
 - binary: 240
 
 ## Text files
@@ -54,7 +54,7 @@ It does not change any source files.
 | lf-only | no | `AddOns/Fade/Jamfile` |
 | lf-only | no | `AddOns/Fade/Languages.json` |
 | lf-only | no | `AddOns/Fade/clean_all` |
-| mixed | no | `AddOns/IIRFilter/CMakeLists.txt` |
+| lf-only | no | `AddOns/IIRFilter/CMakeLists.txt` |
 | lf-only | no | `AddOns/IIRFilter/Effect_IIRFilter.cpp` |
 | lf-only | no | `AddOns/IIRFilter/Effect_IIRFilter.h` |
 | lf-only | no | `AddOns/IIRFilter/Jamfile` |
@@ -102,7 +102,7 @@ It does not change any source files.
 | lf-only | no | `Editor/EffectsWindow.h` |
 | lf-only | no | `Editor/ExportMediaWindow.cpp` |
 | lf-only | no | `Editor/ExportMediaWindow.h` |
-| lf-only | yes | `Editor/ExportMedia_MediaKit.cpp` |
+| lf-only | no | `Editor/ExportMedia_MediaKit.cpp` |
 | lf-only | no | `Editor/ExportMedia_MediaKit.h` |
 | crlf-only | yes | `Editor/ExportMedia_ffmpeg.cpp` |
 | crlf-only | no | `Editor/ExportMedia_ffmpeg.h` |
@@ -263,7 +263,7 @@ It does not change any source files.
 | lf-only | no | `Plugins/Burn/Burn.plugin` |
 | lf-only | no | `Plugins/Burn/Languages.json` |
 | lf-only | no | `Plugins/Circle/Circle.frag` |
-| mixed | no | `Plugins/Circle/Circle.plugin` |
+| lf-only | no | `Plugins/Circle/Circle.plugin` |
 | crlf-only | no | `Plugins/Circle/Languages.json` |
 | lf-only | no | `Plugins/EdgeDetect/EdgeDetect.frag` |
 | lf-only | no | `Plugins/EdgeDetect/EdgeDetect.plugin` |
@@ -284,7 +284,7 @@ It does not change any source files.
 | lf-only | no | `Plugins/HighlightsAndShadows/HighlightsAndShadows.plugin` |
 | lf-only | no | `Plugins/HighlightsAndShadows/Languages.json` |
 | lf-only | no | `Plugins/Iris/Iris.frag` |
-| mixed | no | `Plugins/Iris/Iris.plugin` |
+| lf-only | no | `Plugins/Iris/Iris.plugin` |
 | crlf-only | no | `Plugins/Iris/Languages.json` |
 | lf-only | no | `Plugins/Levels/Languages.json` |
 | lf-only | no | `Plugins/Levels/Levels.frag` |
@@ -308,7 +308,7 @@ It does not change any source files.
 | crlf-only | no | `Plugins/ShockWave/ShockWave.frag` |
 | lf-only | no | `Plugins/ShockWave/ShockWave.plugin` |
 | lf-only | no | `Plugins/Sketch/Languages.json` |
-| mixed | no | `Plugins/Sketch/Sketch.frag` |
+| lf-only | no | `Plugins/Sketch/Sketch.frag` |
 | lf-only | no | `Plugins/Sketch/Sketch.plugin` |
 | lf-only | no | `Plugins/SlotMachine/Languages.json` |
 | lf-only | no | `Plugins/SlotMachine/SlotMachine.frag` |
@@ -383,7 +383,7 @@ It does not change any source files.
 | lf-only | no | `Yarra/FreeTypeGL/FTVector.h` |
 | lf-only | no | `Yarra/FreeTypeGL/FTVectoriser.cpp` |
 | lf-only | no | `Yarra/FreeTypeGL/FTVectoriser.h` |
-| no-eol | no | `Yarra/FreeTypeGL/config.h` |
+| lf-only | no | `Yarra/FreeTypeGL/config.h` |
 | lf-only | no | `Yarra/FreeTypeGL/libtess/dict-list.h` |
 | lf-only | no | `Yarra/FreeTypeGL/libtess/dict.h` |
 | lf-only | no | `Yarra/FreeTypeGL/libtess/geom.h` |
