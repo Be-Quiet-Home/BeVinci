@@ -6,6 +6,7 @@
 
 #ifndef EFFECT_CHROMA_KEY_H
 #define EFFECT_CHROMA_KEY_H
+#include "../BeVinciAddOnExport.h"
 
 #ifndef EFFECT_NODE_H
 #include "Editor/EffectNode.h"
@@ -72,6 +73,6 @@ private:
 	void					MessageColourPickerSelected(int32 index);
 };
 
-extern "C" __declspec(dllexport) Effect_ChromaKey *instantiate_effect(BRect frame);
+extern "C" BEVINCI_ADDON_EXPORT Effect_ChromaKey *instantiate_effect(BRect frame);
 
 #endif	//#ifndef EFFECT_CHROMA_KEY_H
