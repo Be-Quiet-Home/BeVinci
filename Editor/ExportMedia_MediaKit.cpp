@@ -1,4 +1,4 @@
-﻿/*	PROJECT:		Medo
+/*	PROJECT:		Medo
  *	AUTHORS:		Zenja Solaja, Melbourne Australia
  *	COPYRIGHT:		Zen Yes Pty Ltd, 2019-2021
  *	DESCRIPTION:	Export Media Thread

@@ -25,7 +25,8 @@
 			{
 				"type":		"float",
 				"name":	"uWidth"
-			},
+			},
+
 			{
 				"type":		"interval",
 				"name":	"uTime"

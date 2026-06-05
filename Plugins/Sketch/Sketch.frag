@@ -34,7 +34,7 @@ void main()
   vec3 color = texture(tex0, uv).rgb;
 
  fragcol = cartoon(uv, color);
- 
+
 
   fFragColour = vec4(fragcol, 1.0);
 }

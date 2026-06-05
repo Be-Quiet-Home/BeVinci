@@ -21,7 +21,8 @@
 			{
 				"type":		"float",
 				"name":	"uWidth"
-			},
+			},
+
 			{
 				"type":		"float",
 				"name":	"uRadius"
@@ -124,7 +125,7 @@
 				"label":				9,
 				"default":			0,
 				"uniform":		"uFilled"
-			}			
+			}
 		]
 	}
 }
