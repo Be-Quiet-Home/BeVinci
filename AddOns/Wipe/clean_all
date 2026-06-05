@@ -1,10 +1,10 @@
 #!/bin/sh
 
-rm *.so
-rm *.o
+rm -f *.so
+rm -f *.o
 rm -rf CMakeFiles
-rm CMakeCache.txt
-rm cmake_install.cmake
-rm Makefile
-rm CMakeLists.txt.user
+rm -f CMakeCache.txt
+rm -f cmake_install.cmake
+rm -f Makefile
+rm -f CMakeLists.txt.user
 
