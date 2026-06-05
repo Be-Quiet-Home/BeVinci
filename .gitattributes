@@ -1,19 +1,21 @@
 # BeVinci source hygiene policy.
 #
-# This file defines the desired future policy. Existing files are not normalized
-# in this commit. Any line-ending normalization must happen in a separate,
-# explicit hygiene commit.
+# Do not apply a global text=auto rule yet.
+# The imported Medo baseline contains a measured mixture of LF, CRLF, BOM,
+# mixed line endings, and files without final newline.
+#
+# Existing source files must not be normalized accidentally as a side effect of
+# unrelated functional changes. Any source normalization must happen in a
+# separate, explicit hygiene commit.
 
-* text=auto
-
-*.cpp text
-*.h text
-*.hpp text
-*.c text
-*.cc text
 *.md text eol=lf
-*.json text eol=lf
 *.txt text eol=lf
+*.json text eol=lf
+*.plugin text eol=lf
+*.frag text eol=lf
+*.vert text eol=lf
+CMakeLists.txt text eol=lf
+*.cmake text eol=lf
 
 *.png binary
 *.jpg binary
