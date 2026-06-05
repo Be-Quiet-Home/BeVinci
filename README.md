@@ -1,3 +1,14 @@
+# BeVinci
+
+BeVinci is a hard fork of Medo by Zenja Solaja.
+
+Medo provided the original Haiku-native media editor foundation.
+BeVinci continues from the last stable Haiku R1/beta5-friendly release line,
+with a focus on source hygiene, documented extension points, long-term
+Haiku stability, and workstation-grade video editing capabilities.
+
+---
+
 # Medo
 ![Alt text](/Docs/Medo_Logo.png?raw=true "Medo Logo")
 
