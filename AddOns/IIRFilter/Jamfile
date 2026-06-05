@@ -23,7 +23,7 @@ rule SharedLibrary {
 C++FLAGS += -std=c++2a -O3 ;
 C++FLAGS += -I../../Yarra -I../../ -I/boot/system/develop/headers/private/interface ;
 C++FLAGS += -I/boot/system/develop/headers/freetype2 ;
-C++FLAGS += -Wno-interference-size ;
+C++FLAGS += --param=destructive-interference-size=64 ;
 
 # Source files needed to build Medo
 SharedLibrary IIRFilter  :
