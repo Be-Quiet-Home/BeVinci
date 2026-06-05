@@ -7,6 +7,7 @@
 
 #ifndef EFFECT_IIR_FILTER_H
 #define EFFECT_IIR_FILTER_H
+#include "../BeVinciAddOnExport.h"
 
 #ifndef EFFECT_NODE_H
 #include "Editor/EffectNode.h"
@@ -62,6 +63,6 @@ private:
 	std::vector<FilterCache>		fFilterCache;
 };
 
-extern "C" __declspec(dllexport) EffectNode_IIRFilter *instantiate_effect(BRect frame);
+extern "C" BEVINCI_ADDON_EXPORT EffectNode_IIRFilter *instantiate_effect(BRect frame);
 
 #endif	//#ifndef EFFECT_IIR_FILTER_H

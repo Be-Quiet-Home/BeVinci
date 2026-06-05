@@ -6,6 +6,7 @@
 
 #ifndef EFFECT_FADE_H
 #define EFFECT_FADE_H
+#include "../BeVinciAddOnExport.h"
 
 #ifndef EFFECT_NODE_H
 #include "Editor/EffectNode.h"
@@ -54,6 +55,6 @@ private:
 
 };
 
-extern "C" __declspec(dllexport) Effect_Fade *instantiate_effect(BRect frame);
+extern "C" BEVINCI_ADDON_EXPORT Effect_Fade *instantiate_effect(BRect frame);
 
 #endif	//#ifndef EFFECT_FADE_H

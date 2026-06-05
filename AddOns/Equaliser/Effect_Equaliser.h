@@ -6,6 +6,7 @@
 
 #ifndef EFFECT_EQUALISER_H
 #define EFFECT_EQUALISER_H
+#include "../BeVinciAddOnExport.h"
 
 #ifndef EFFECT_NODE_H
 #include "Editor/EffectNode.h"
@@ -59,6 +60,6 @@ private:
 	OrfanidisEq::Eq					*fEqualiser;
 };
 
-extern "C" __declspec(dllexport) EffectNode_Equaliser *instantiate_effect(BRect frame);
+extern "C" BEVINCI_ADDON_EXPORT EffectNode_Equaliser *instantiate_effect(BRect frame);
 
 #endif	//#ifndef EFFECT_EQUALISER_H

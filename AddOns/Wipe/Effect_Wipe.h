@@ -6,6 +6,7 @@
 
 #ifndef EFFECT_WIPE_H
 #define EFFECT_WIPE_H
+#include "../BeVinciAddOnExport.h"
 
 #ifndef EFFECT_NODE_H
 #include "Editor/EffectNode.h"
@@ -53,6 +54,6 @@ private:
 	std::vector<BRadioButton *>	fGuiButtons;
 };
 
-extern "C" __declspec(dllexport) Effect_Wipe *instantiate_effect(BRect frame);
+extern "C" BEVINCI_ADDON_EXPORT Effect_Wipe *instantiate_effect(BRect frame);
 
 #endif	//#ifndef EFFECT_WIPE_H
