@@ -775,38 +775,34 @@ const bool Project :: SaveProject(FILE *file)
 	}
 
 	//	"sources"
-	sprintf(buffer, "\t\"sources\": [\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	size_t sources_count = 0;
-	for (auto &s : outSources)
 	{
-		sprintf(buffer, "\t\t{\n");
-		fwrite(buffer, strlen(buffer), 1, file);
-		
-		sprintf(buffer, "\t\t\t\"id\": %u,\n", s.id);
-		fwrite(buffer, strlen(buffer), 1, file);
-		
-		sprintf(buffer, "\t\t\t\"type\": \"%s\",\n", kMediaType[s.type]);
-		fwrite(buffer, strlen(buffer), 1, file);
-		
-		if (!s.label.empty())
+		BeJsonWriter writer;
+		writer.StartArray();
+		for (auto &s : outSources)
 		{
-			sprintf(buffer, "\t\t\t\"label\": \"%s\",\n", s.label.c_str());
-			fwrite(buffer, strlen(buffer), 1, file);
+			writer.StartObject();
+			writer.Key("id");
+			writer.Uint((unsigned int)s.id);
+			writer.Key("type");
+			writer.String(kMediaType[s.type]);
+			if (!s.label.empty())
+			{
+				writer.Key("label");
+				writer.String(s.label.c_str());
+			}
+			writer.Key("file");
+			writer.String(s.filename.c_str());
+			writer.EndObject();
 		}
+		writer.EndArray();
 
-		sprintf(buffer, "\t\t\t\"file\": \"%s\"\n", s.filename.c_str());
+		sprintf(buffer, "\t\"sources\": ");
 		fwrite(buffer, strlen(buffer), 1, file);
-		
-		if (++sources_count < outSources.size())
-			sprintf(buffer, "\t\t},\n");
-		else
-			sprintf(buffer, "\t\t}\n");
-		fwrite(buffer, strlen(buffer), 1, file);	
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, ",\n");
+		fwrite(buffer, strlen(buffer), 1, file);
 	}
-	sprintf(buffer, "\t],\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+
 	//	"clips"
 	sprintf(buffer, "\t\"clips\": [\n");
 	fwrite(buffer, strlen(buffer), 1, file);
