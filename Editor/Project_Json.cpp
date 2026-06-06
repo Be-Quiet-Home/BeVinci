@@ -847,9 +847,24 @@ const bool Project :: SaveProject(FILE *file)
 		fwrite(buffer, strlen(buffer), 1, file);
 		sprintf(buffer, "\t\t\t\"id\": %u,\n", i.id);
 		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"vendor\": \"%s\",\n", i.media_effect->mEffectNode->GetVendorName());
+		sprintf(buffer, "\t\t\t\"vendor\": ");
 		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"name\": \"%s\",\n", i.media_effect->mEffectNode->GetEffectName());
+		{
+			BeJsonWriter writer;
+			writer.String(i.media_effect->mEffectNode->GetVendorName());
+			fwrite(writer.Data(), 1, writer.Size(), file);
+		}
+		sprintf(buffer, ",\n");
+		fwrite(buffer, strlen(buffer), 1, file);
+
+		sprintf(buffer, "\t\t\t\"name\": ");
+		fwrite(buffer, strlen(buffer), 1, file);
+		{
+			BeJsonWriter writer;
+			writer.String(i.media_effect->mEffectNode->GetEffectName());
+			fwrite(writer.Data(), 1, writer.Size(), file);
+		}
+		sprintf(buffer, ",\n");
 		fwrite(buffer, strlen(buffer), 1, file);
 		sprintf(buffer, "\t\t\t\"start\": %ld,\n", i.media_effect->mTimelineFrameStart);
 		fwrite(buffer, strlen(buffer), 1, file);
