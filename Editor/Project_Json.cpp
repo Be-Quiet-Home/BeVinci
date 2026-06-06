@@ -756,17 +756,24 @@ const bool Project :: SaveProject(FILE *file)
 	}
 
 	//	"resolution"
-	sprintf(buffer, "\t\"resolution\": {\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"width\": %u,\n", mResolution.width);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"height\": %u,\n", mResolution.height);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"frame_rate\": %f\n", mResolution.frame_rate);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t},\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+	{
+		BeJsonWriter writer;
+		writer.StartObject();
+		writer.Key("width");
+		writer.Uint(mResolution.width);
+		writer.Key("height");
+		writer.Uint(mResolution.height);
+		writer.Key("frame_rate");
+		writer.Double(mResolution.frame_rate);
+		writer.EndObject();
+
+		sprintf(buffer, "\t\"resolution\": ");
+		fwrite(buffer, strlen(buffer), 1, file);
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, ",\n");
+		fwrite(buffer, strlen(buffer), 1, file);
+	}
+
 	//	"sources"
 	sprintf(buffer, "\t\"sources\": [\n");
 	fwrite(buffer, strlen(buffer), 1, file);
