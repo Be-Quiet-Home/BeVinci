@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "rapidjson/prettywriter.h"
+#include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
 class BeJsonWriter
@@ -88,7 +88,7 @@ public:
 	}
 
 private:
-	typedef rapidjson::PrettyWriter<rapidjson::StringBuffer> WriterType;
+	typedef rapidjson::Writer<rapidjson::StringBuffer> WriterType;
 
 	BeJsonWriter(const BeJsonWriter&);
 	BeJsonWriter& operator=(const BeJsonWriter&);

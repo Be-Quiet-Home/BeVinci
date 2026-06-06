@@ -35,15 +35,18 @@ The build proves that the writer adapter compiles and links.
 It does not prove that the produced project file is accepted by the existing
 loader.
 
-## Current risk
+## Validation result
 
-`BeJsonWriter` currently uses RapidJSON `PrettyWriter`.
+The first embedded writer output was tested with RapidJSON parsing.
 
-This produces valid JSON but may format indentation differently from the old
-hand-written writer.
+The original `PrettyWriter` based adapter produced valid JSON, but its indentation
+was not suitable for embedding small generated objects inside the existing
+hand-written project writer.
 
-JSON readers must not depend on whitespace, but BeVinci should still verify
-saved files before wider migration.
+`BeJsonWriter` now uses RapidJSON `Writer` instead of `PrettyWriter`.
+
+This keeps embedded blocks compact while still using RapidJSON for correct JSON
+string escaping and value emission.
 
 ## Next migration rule
 
