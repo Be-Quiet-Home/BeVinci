@@ -965,23 +965,30 @@ const bool Project :: SaveProject(FILE *file)
 	fwrite(buffer, strlen(buffer), 1, file);
 	
 	//	"session"
-	sprintf(buffer, "\t\"session\": {\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"horizontal_scroll\": %f,\n", session.horizontal_scroll);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"vertical_scroll\": %f,\n", session.vertical_scroll);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"zoom_index\": %d,\n", session.zoom_index);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"current_frame\": %ld,\n", session.current_frame);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"marker_a\": %ld,\n", session.marker_a);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"marker_b\": %ld\n", session.marker_b);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t}\n}\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+	{
+		BeJsonWriter writer;
+		writer.StartObject();
+		writer.Key("horizontal_scroll");
+		writer.Double(session.horizontal_scroll);
+		writer.Key("vertical_scroll");
+		writer.Double(session.vertical_scroll);
+		writer.Key("zoom_index");
+		writer.Int(session.zoom_index);
+		writer.Key("current_frame");
+		writer.Int64(session.current_frame);
+		writer.Key("marker_a");
+		writer.Int64(session.marker_a);
+		writer.Key("marker_b");
+		writer.Int64(session.marker_b);
+		writer.EndObject();
+
+		sprintf(buffer, "\t\"session\": ");
+		fwrite(buffer, strlen(buffer), 1, file);
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, "\n}\n");
+		fwrite(buffer, strlen(buffer), 1, file);
+	}
+
 	return true;
 }
 
