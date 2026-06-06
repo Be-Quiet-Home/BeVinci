@@ -877,28 +877,29 @@ const bool Project :: SaveProject(FILE *file)
 	fwrite(buffer, strlen(buffer), 1, file);
 
 	//	"notes"
-	sprintf(buffer, "\t\"notes\": [\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	size_t note_count = 0;
-	for (auto &n : outNotes)
 	{
-		sprintf(buffer, "\t\t{\n");
+		BeJsonWriter writer;
+		writer.StartArray();
+		for (auto &n : outNotes)
+		{
+			writer.StartObject();
+			writer.Key("id");
+			writer.Uint((unsigned int)n.id);
+			writer.Key("timeline");
+			writer.Int64(n.timeline);
+			writer.Key("text");
+			writer.String(n.text.String());
+			writer.EndObject();
+		}
+		writer.EndArray();
+
+		sprintf(buffer, "\t\"notes\": ");
 		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"id\": %u,\n", n.id);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"timeline\": %ld,\n", n.timeline);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"text\": \"%s\"\n", n.text.String());
-		fwrite(buffer, strlen(buffer), 1, file);
-		if (++note_count < outNotes.size())
-			sprintf(buffer, "\t\t},\n");
-		else
-			sprintf(buffer, "\t\t}\n");
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, ",\n");
 		fwrite(buffer, strlen(buffer), 1, file);
 	}
-	sprintf(buffer, "\t],\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+
 	//	"tracks"
 	{
 		BeJsonWriter writer;
