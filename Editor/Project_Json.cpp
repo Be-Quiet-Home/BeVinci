@@ -16,6 +16,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 
+#include "BeJsonWriter.h"
 #include "Project.h"
 #include "FileUtility.h"
 #include "MediaSource.h"
@@ -740,13 +741,20 @@ const bool Project :: SaveProject(FILE *file)
 	fwrite(buffer, strlen(buffer), 1, file);
 	
 	//	"medo"
-	sprintf(buffer, "\t\"medo\": {\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t\t\"version\": %d\n", 1);
-	fwrite(buffer, strlen(buffer), 1, file);
-	sprintf(buffer, "\t},\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+	{
+		BeJsonWriter writer;
+		writer.StartObject();
+		writer.Key("version");
+		writer.Int(1);
+		writer.EndObject();
+
+		sprintf(buffer, "\t\"medo\": ");
+		fwrite(buffer, strlen(buffer), 1, file);
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, ",\n");
+		fwrite(buffer, strlen(buffer), 1, file);
+	}
+
 	//	"resolution"
 	sprintf(buffer, "\t\"resolution\": {\n");
 	fwrite(buffer, strlen(buffer), 1, file);
