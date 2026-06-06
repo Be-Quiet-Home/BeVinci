@@ -804,38 +804,39 @@ const bool Project :: SaveProject(FILE *file)
 	}
 
 	//	"clips"
-	sprintf(buffer, "\t\"clips\": [\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	size_t clips_count = 0;
-	for (auto &c : outClips)
 	{
-		sprintf(buffer, "\t\t{\n");
+		BeJsonWriter writer;
+		writer.StartArray();
+		for (auto &c : outClips)
+		{
+			writer.StartObject();
+			writer.Key("id");
+			writer.Uint((unsigned int)c.id);
+			writer.Key("source");
+			writer.Uint((unsigned int)c.source);
+			writer.Key("start");
+			writer.Int64(c.start);
+			writer.Key("end");
+			writer.Int64(c.end);
+			writer.Key("timeline");
+			writer.Int64(c.timeline);
+			writer.Key("video_enabled");
+			writer.Bool(c.video_enabled);
+			writer.Key("audio_enabled");
+			writer.Bool(c.audio_enabled);
+			writer.Key("tag");
+			writer.String(c.tag.String());
+			writer.EndObject();
+		}
+		writer.EndArray();
+
+		sprintf(buffer, "\t\"clips\": ");
 		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"id\": %u,\n", c.id);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"source\": %u,\n", c.source);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"start\": %ld,\n", c.start);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"end\": %ld,\n", c.end);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"timeline\": %ld,\n", c.timeline);
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"video_enabled\": %s,\n", c.video_enabled ? "true" : "false");
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"audio_enabled\": %s,\n", c.audio_enabled ? "true" : "false");
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"tag\": \"%s\"\n", c.tag.String());
-		fwrite(buffer, strlen(buffer), 1, file);
-		if (++clips_count < outClips.size())
-			sprintf(buffer, "\t\t},\n");
-		else
-			sprintf(buffer, "\t\t}\n");
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, ",\n");
 		fwrite(buffer, strlen(buffer), 1, file);
 	}
-	sprintf(buffer, "\t],\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+
 	//	"effects"
 	sprintf(buffer, "\t\"effects\": [\n");
 	fwrite(buffer, strlen(buffer), 1, file);
