@@ -903,67 +903,54 @@ const bool Project :: SaveProject(FILE *file)
 	fwrite(buffer, strlen(buffer), 1, file);
 	
 	//	"tracks"
-	sprintf(buffer, "\t\"tracks\": [\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	size_t tracks_count = 0;
-	for (auto &i : outTracks)
 	{
-		sprintf(buffer, "\t\t{\n");
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"id\": %u,\n", i.id);
-		fwrite(buffer, strlen(buffer), 1, file);
-		if (i.global)
+		BeJsonWriter writer;
+		writer.StartArray();
+		for (auto &i : outTracks)
 		{
-			sprintf(buffer, "\t\t\t\"global\": true,\n");
-			fwrite(buffer, strlen(buffer), 1, file);
+			writer.StartObject();
+			writer.Key("id");
+			writer.Uint((unsigned int)i.id);
+			if (i.global)
+			{
+				writer.Key("global");
+				writer.Bool(true);
+			}
+			writer.Key("video_enabled");
+			writer.Bool(i.video_enabled);
+			writer.Key("audio_enabled");
+			writer.Bool(i.audio_enabled);
+			writer.Key("levels");
+			writer.StartArray();
+			writer.Double(i.audio_levels[0]);
+			writer.Double(i.audio_levels[1]);
+			writer.EndArray();
+			writer.Key("clips");
+			writer.StartArray();
+			for (auto &clip : i.clips)
+				writer.Uint((unsigned int)clip);
+			writer.EndArray();
+			writer.Key("effects");
+			writer.StartArray();
+			for (auto &effect : i.effects)
+				writer.Uint((unsigned int)effect);
+			writer.EndArray();
+			writer.Key("notes");
+			writer.StartArray();
+			for (auto &note : i.notes)
+				writer.Uint((unsigned int)note);
+			writer.EndArray();
+			writer.EndObject();
 		}
-		sprintf(buffer, "\t\t\t\"video_enabled\": %s,\n", i.video_enabled ? "true" : "false");
-		fwrite(buffer, strlen(buffer), 1, file);
-		sprintf(buffer, "\t\t\t\"audio_enabled\": %s,\n", i.audio_enabled ? "true" : "false");
-		fwrite(buffer, strlen(buffer), 1, file);
+		writer.EndArray();
 
-		sprintf(buffer, "\t\t\t\"levels\": [%f, %f],\n", i.audio_levels[0], i.audio_levels[1]);
+		sprintf(buffer, "\t\"tracks\": ");
 		fwrite(buffer, strlen(buffer), 1, file);
-
-		sprintf(buffer, "\t\t\t\"clips\": [");
-		fwrite(buffer, strlen(buffer), 1, file);
-		for (size_t c=0; c < i.clips.size();c++)
-		{
-			sprintf(buffer, "%u%s", i.clips[c], c+1<i.clips.size() ? ", " : "");
-			fwrite(buffer, strlen(buffer), 1, file);
-		}
-		sprintf(buffer, "],\n");
-		fwrite(buffer, strlen(buffer), 1, file);
-		
-		sprintf(buffer, "\t\t\t\"effects\": [");
-		fwrite(buffer, strlen(buffer), 1, file);
-		for (size_t e=0; e < i.effects.size();e++)
-		{
-			sprintf(buffer, "%u%s", i.effects[e], e+1<i.effects.size() ? ", " : "");
-			fwrite(buffer, strlen(buffer), 1, file);
-		}
-		sprintf(buffer, "],\n");
-		fwrite(buffer, strlen(buffer), 1, file);
-
-		sprintf(buffer, "\t\t\t\"notes\": [");
-		fwrite(buffer, strlen(buffer), 1, file);
-		for (size_t n=0; n < i.notes.size(); n++)
-		{
-			sprintf(buffer, "%u%s", i.notes[n], n+1<i.notes.size() ? ", " : "");
-			fwrite(buffer, strlen(buffer), 1, file);
-		}
-		sprintf(buffer, "]\n");
-		fwrite(buffer, strlen(buffer), 1, file);
-			
-		if (++tracks_count < outTracks.size())
-			sprintf(buffer, "\t\t},\n");
-		else
-			sprintf(buffer, "\t\t}\n");
+		fwrite(writer.Data(), 1, writer.Size(), file);
+		sprintf(buffer, ",\n");
 		fwrite(buffer, strlen(buffer), 1, file);
 	}
-	sprintf(buffer, "\t],\n");
-	fwrite(buffer, strlen(buffer), 1, file);
-	
+
 	//	"session"
 	{
 		BeJsonWriter writer;
