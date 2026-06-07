@@ -16,6 +16,7 @@
 #include "Yarra/Render/MatrixStack.h"
 #include "Yarra/Render/Picture.h"
 
+#include "Editor/BeJsonWriter.h"
 #include "Editor/EffectNode.h"
 #include "Editor/Language.h"
 #include "Editor/LanguageJson.h"
@@ -380,5 +381,13 @@ bool Effect_Fade :: SaveParameters(FILE *file, MediaEffect *media_effect)
 	char buffer[0x80];	//	128 bytes
 	sprintf(buffer, "\t\t\t\t\"direction\": %u\n", data->direction);
 	fwrite(buffer, strlen(buffer), 1, file);
+	return true;
+}
+
+bool Effect_Fade :: SaveParameters(BeJsonWriter &writer, MediaEffect *media_effect)
+{
+	EffectFadeData *data = (EffectFadeData *) media_effect->mEffectData;
+	writer.Key("direction");
+	writer.Uint(data->direction);
 	return true;
 }
