@@ -16,6 +16,7 @@
 #include "Yarra/Render/MatrixStack.h"
 #include "Yarra/Render/Picture.h"
 
+#include "Editor/BeJsonWriter.h"
 #include "Editor/EffectNode.h"
 #include "Editor/Language.h"
 #include "Editor/LanguageJson.h"
@@ -583,5 +584,15 @@ bool Effect_Wipe :: SaveParameters(FILE *file, MediaEffect *media_effect)
 	fwrite(buffer, strlen(buffer), 1, file);
 	sprintf(buffer, "\t\t\t\t\"swap\": %s\n", data->swap > 0 ? "true" : "false");
 	fwrite(buffer, strlen(buffer), 1, file);
+	return true;
+}
+
+bool Effect_Wipe :: SaveParameters(BeJsonWriter &writer, MediaEffect *media_effect)
+{
+	EffectWipeData *data = (EffectWipeData *) media_effect->mEffectData;
+	writer.Key("direction");
+	writer.Uint(data->direction);
+	writer.Key("swap");
+	writer.Bool(data->swap > 0);
 	return true;
 }

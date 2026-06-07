@@ -36,6 +36,7 @@ public:
 	const char		*GetEffectName() const							override;
 	bool			LoadParameters(const rapidjson::Value &parameters, MediaEffect *media_effect)	override;
 	bool			SaveParameters(FILE *file, MediaEffect *media_effect)							override;
+	bool			SaveParameters(BeJsonWriter &writer, MediaEffect *media_effect)			override;
 	
 	BBitmap			*GetIcon()										override;
 	const char		*GetTextEffectName(const uint32 language_idx)	override;
