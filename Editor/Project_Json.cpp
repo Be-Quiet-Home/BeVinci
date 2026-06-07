@@ -876,11 +876,27 @@ const bool Project :: SaveProject(FILE *file)
 		fwrite(buffer, strlen(buffer), 1, file);
 		if (i.media_effect->mEffectData)
 		{
-			sprintf(buffer, "\t\t\t\"parameters\":{\n");
-			fwrite(buffer, strlen(buffer), 1, file);
-			i.media_effect->mEffectNode->SaveParameters(file, i.media_effect);
-			sprintf(buffer, "\t\t\t}\n");
-			fwrite(buffer, strlen(buffer), 1, file);
+			BeJsonWriter parameter_writer;
+			parameter_writer.StartObject();
+			const bool wrote_parameters = i.media_effect->mEffectNode->SaveParameters(parameter_writer, i.media_effect);
+			parameter_writer.EndObject();
+
+			if (wrote_parameters)
+			{
+				sprintf(buffer, "\t\t\t\"parameters\": ");
+				fwrite(buffer, strlen(buffer), 1, file);
+				fwrite(parameter_writer.Data(), 1, parameter_writer.Size(), file);
+				sprintf(buffer, "\n");
+				fwrite(buffer, strlen(buffer), 1, file);
+			}
+			else
+			{
+				sprintf(buffer, "\t\t\t\"parameters\":{\n");
+				fwrite(buffer, strlen(buffer), 1, file);
+				i.media_effect->mEffectNode->SaveParameters(file, i.media_effect);
+				sprintf(buffer, "\t\t\t}\n");
+				fwrite(buffer, strlen(buffer), 1, file);
+			}
 		}
 		if (++effects_count < outEffects.size())
 			sprintf(buffer, "\t\t},\n");
