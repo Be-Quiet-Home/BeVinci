@@ -28,6 +28,7 @@ class BFilePanel;
 class BCheckBox;
 
 class MediaEffect;
+class BeJsonWriter;
 class TimelineTrack;
 class MediaClip;
 class EffectDragDropButton;
@@ -65,6 +66,7 @@ public:
 	virtual const char		*GetEffectName() const = 0;				//	Language independant name (used in .medo project files)
 	virtual bool			LoadParameters(const rapidjson::Value &parameters, MediaEffect *media_effect) = 0;
 	virtual bool			SaveParameters(FILE *file, MediaEffect *media_effect) = 0;
+	virtual bool			SaveParameters(BeJsonWriter&, MediaEffect*)						{return false;}
 	//	Icon to display in Effects tab
 	virtual BBitmap			*GetIcon() = 0;	//	client acquires ownership
 	//	Text description in Effects tab
